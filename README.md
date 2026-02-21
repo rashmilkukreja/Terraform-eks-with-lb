@@ -1,7 +1,7 @@
 # terraform-eks-with-lb
 
 Minimal Terraform repo to create a VPC, EKS cluster, node group, and deploy an nginx app exposed via an ALB (Ingress).
-- For more details refer (Medium)[https://medium.com/@rashmil.kukreja/automating-deployment-of-cv-in-eks-cluster-with-lb-using-terraform-295b17f8ced4]
+- For more details refer [ Medium](https://medium.com/@rashmil.kukreja/automating-deployment-of-cv-in-eks-cluster-with-lb-using-terraform-295b17f8ced4)
 
 ## Repo layout
 - main.tf, providers.tf, backend.tf, variables.tf, outputs.tf, versions.tf — root orchestration
