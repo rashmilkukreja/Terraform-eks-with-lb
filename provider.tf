@@ -1,6 +1,6 @@
 provider "aws" {
   region = var.region
-  profile = "personal"
+  # profile = "personal" 
 }
 
 provider "kubernetes" {

@@ -34,22 +34,3 @@ resource "null_resource" "kubeconfig" {
     cluster_name = module.eks.cluster_name
   }
 }
-
-module "nginx" {
-  depends_on = [ module.eks ]
-  source = "./modules/apps/nginx"
-  namespace = "default"
-  alb_name  = "eks-nginx-alb"
-  cluster_name  = var.cluster_name
-}
-
-resource "time_sleep" "wait_for_alb" {
-  depends_on = [ module.nginx ]
-  create_duration = "50s"
-}
-
-data "aws_lb" "nginx" {
-  depends_on = [time_sleep.wait_for_alb]
-
-  name = "${var.cluster_name}-nginx-alb"
-}
