@@ -2,6 +2,8 @@
 
 Terraform project for creating an AWS VPC, EKS cluster, managed node group, and AWS Load Balancer Controller. The current deployment also includes a `cv` application exposed through an AWS ALB and a Grafana/Prometheus monitoring stack.
 
+![Terraform EKS architecture](assets/terraform-eks-architecture.png)
+
 For background, see the related article: [Automating deployment of CV in EKS cluster with LB using Terraform](https://medium.com/@rashmil.kukreja/automating-deployment-of-cv-in-eks-cluster-with-lb-using-terraform-295b17f8ced4).
 
 ## Repository Layout

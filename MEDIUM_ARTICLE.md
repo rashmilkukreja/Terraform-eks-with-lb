@@ -1,5 +1,7 @@
 # Automating CV App Deployment on AWS EKS with Terraform, ALB, Prometheus, and Grafana
 
+![Terraform EKS architecture](assets/terraform-eks-architecture.png)
+
 In this project, I used Terraform to provision an AWS EKS environment and deploy a containerized CV application behind an AWS Application Load Balancer. The setup also includes the AWS Load Balancer Controller and a monitoring stack with Prometheus and Grafana.
 
 The goal was simple: create repeatable infrastructure that can bring up networking, Kubernetes, load balancing, and observability with a small set of Terraform commands.
