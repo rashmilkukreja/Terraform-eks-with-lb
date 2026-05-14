@@ -1,3 +1,4 @@
+# Creates the network foundation that the EKS cluster will run inside.
 module "vpc" {
   source         = "./modules/vpc"
   region         = var.region
@@ -5,30 +6,32 @@ module "vpc" {
   private_subnet = var.private_subnet
   public_subnet  = var.public_subnet
   azs            = var.azs
-  cluster_name = var.cluster_name
+  cluster_name   = var.cluster_name
 }
 
+# Creates the EKS control plane, managed node group, IAM resources, and ALB controller.
 module "eks" {
-  depends_on    = [ module.vpc ]
-  source        = "./modules/eks"
-  cluster_name  = var.cluster_name
-  vpc_id        = module.vpc.my_vpc
-  subnet_ids    = module.vpc.private_subnets
-  ami_type     = var.ami_type
-  ec2_ssh_key  = var.ec2_ssh_key
+  depends_on     = [module.vpc]
+  source         = "./modules/eks"
+  cluster_name   = var.cluster_name
+  vpc_id         = module.vpc.my_vpc
+  subnet_ids     = module.vpc.private_subnets
+  ami_type       = var.ami_type
+  ec2_ssh_key    = var.ec2_ssh_key
   instance_types = var.instance_types
-  region = var.region
+  region         = var.region
 
 }
 
+# Updates the local kubeconfig after the cluster is created so kubectl can reach it.
 resource "null_resource" "kubeconfig" {
   depends_on = [
     module.eks
   ]
 
   provisioner "local-exec" {
-  command = "AWS_PROFILE=${var.aws_profile} aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.region}"
-}
+    command = "AWS_PROFILE=${var.aws_profile} aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.region}"
+  }
 
   triggers = {
     cluster_name = module.eks.cluster_name

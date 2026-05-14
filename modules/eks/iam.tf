@@ -5,10 +5,11 @@
 resource "aws_iam_role" "node" {
   name = "${var.cluster_name}-node-role"
 
+  # EKS managed node groups run on EC2 instances, so EC2 must assume this role.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect    = "Allow"
+      Effect = "Allow"
       Principal = {
         Service = "ec2.amazonaws.com"
       }
@@ -17,8 +18,7 @@ resource "aws_iam_role" "node" {
   })
 
   tags = {
-    Name        = "${var.cluster_name}-node-role"
-    
+    Name = "${var.cluster_name}-node-role"
   }
 }
 
@@ -48,10 +48,11 @@ resource "aws_iam_role_policy_attachment" "ecr" {
 resource "aws_iam_role" "cluster" {
   name = "${var.cluster_name}-cluster-role"
 
+  # The EKS service assumes this role to manage the Kubernetes control plane.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect    = "Allow"
+      Effect = "Allow"
       Principal = {
         Service = "eks.amazonaws.com"
       }
@@ -60,7 +61,7 @@ resource "aws_iam_role" "cluster" {
   })
 
   tags = {
-    Name        = "${var.cluster_name}-cluster-role"
+    Name = "${var.cluster_name}-cluster-role"
   }
 }
 

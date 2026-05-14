@@ -1,3 +1,4 @@
+# Installs the AWS Load Balancer Controller into the EKS cluster.
 resource "helm_release" "alb_controller" {
   name       = "aws-load-balancer-controller"
   namespace  = "kube-system"
@@ -11,6 +12,7 @@ resource "helm_release" "alb_controller" {
       region      = var.region
       vpcId       = var.vpc_id
 
+      # Reuses the Terraform-managed service account so IRSA annotations stay explicit.
       serviceAccount = {
         create = false
         name   = "aws-load-balancer-controller"
